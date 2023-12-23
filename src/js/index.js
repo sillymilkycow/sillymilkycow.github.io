@@ -49,20 +49,22 @@ function MAIN_SceneGenerator(engine, canvas) {
     camera.attachControl(canvas, true);
     //camera.position = new BABYLON.Vector3(0, 0, COMMON.position.val); //COMMON.position.val
 
+    /**/
     const light = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 0.5, 0.6), scene);
     light.position = new BABYLON.Vector3(-15, 15, 5);
     light.intensity = 5000;
     light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
     light.specular = new BABYLON.Color3(0, 0, 0);
-
+    
     //const light = new BABYLON.DirectionalLight('light', new BABYLON.Vector3(2, -0.9, -1), scene);
-    /**/
+    /*
     const light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 1, 0), scene);
     light2.diffuse = new BABYLON.Color3(0, 0, 0);
 	light2.specular = new BABYLON.Color3(0, 0, 0);
 	light2.groundColor = new BABYLON.Color3(0.3, 0.3, 0.3);
+    */
 
-    var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
+    //var shadowGenerator = new BABYLON.ShadowGenerator(1024, light);
     //shadowGenerator.useBlurExponentialShadowMap = true;
     //shadowGenerator.blurBoxOffset = 4;
     
@@ -72,7 +74,7 @@ function MAIN_SceneGenerator(engine, canvas) {
     addSkyBox(scene);
 
     //Add meshes
-    addModel(scene, shadowGenerator);
+    addModel(scene, 'shadowGenerator');
     
     //Add ground
     //addGround(scene);
@@ -108,6 +110,12 @@ function MAIN_GFX_Start() {
 	const engine = new BABYLON.Engine(canvas, true, {stencil:true});
 
     var scene = MAIN_SceneGenerator(engine, canvas);
+    var environment = scene.createDefaultEnvironment({
+        createGround: false,
+        enableGroundShadow: false,
+        groundYBias: 1,
+        groundOpacity: 0.1,
+    });
 
     engine.runRenderLoop(function() {
        scene.render();
@@ -135,5 +143,3 @@ window.addEventListener('resize', function(){
 });
 
 window.addEventListener("load", MAIN_GFX_Start);
-
-
