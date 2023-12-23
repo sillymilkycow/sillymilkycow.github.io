@@ -15,6 +15,7 @@ function addModel(scene, shadowGenerator) {
             if (idx===1) {
                 mesh.checkCollisions = true;  
                 //shadowGenerator.addShadowCaster(mesh);
+                mesh.freezeWorldMatrix();
             }
             mesh.receiveShadows = true;
         } );
@@ -71,7 +72,7 @@ function MAIN_SceneGenerator(engine, canvas) {
     //const box = BABYLON.MeshBuilder.CreateBox("box", {});
 
     //SKYBOX
-    //addSkyBox(scene);
+    addSkyBox(scene);
 
     //Add meshes
     addModel(scene, 'shadowGenerator');
