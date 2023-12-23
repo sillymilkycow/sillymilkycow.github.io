@@ -49,12 +49,12 @@ function MAIN_SceneGenerator(engine, canvas) {
     camera.attachControl(canvas, true);
     //camera.position = new BABYLON.Vector3(0, 0, COMMON.position.val); //COMMON.position.val
 
-    /**/
+    /*
     const light = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 0.5, 0.6), scene);
     light.position = new BABYLON.Vector3(-15, 15, 5);
     light.intensity = 5000;
     light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
-    light.specular = new BABYLON.Color3(0, 0, 0);
+    light.specular = new BABYLON.Color3(0, 0, 0);*/
     
     //const light = new BABYLON.DirectionalLight('light', new BABYLON.Vector3(2, -0.9, -1), scene);
     /*
