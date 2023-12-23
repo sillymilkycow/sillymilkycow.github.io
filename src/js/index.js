@@ -50,11 +50,11 @@ function MAIN_SceneGenerator(engine, canvas) {
     camera.attachControl(canvas, true);
     //camera.position = new BABYLON.Vector3(0, 0, COMMON.position.val); //COMMON.position.val
 
-    /*
-    const light = new BABYLON.PointLight("light", new BABYLON.Vector3(0, 0.5, 0.6), scene);
-    light.position = new BABYLON.Vector3(-15, 15, 5);
-    light.intensity = 5000;
-    light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
+    /* */
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(-1.1, 0.5, 0.6), scene);
+    light.position = new BABYLON.Vector3(0, 1, 0);
+    light.intensity = 2;
+    light.diffuse = new BABYLON.Color3(1, 1, 1);
     light.specular = new BABYLON.Color3(0, 0, 0);
     
     //const light = new BABYLON.DirectionalLight('light', new BABYLON.Vector3(2, -0.9, -1), scene);
@@ -73,6 +73,13 @@ function MAIN_SceneGenerator(engine, canvas) {
 
     //SKYBOX
     addSkyBox(scene);
+
+    //FOG
+    scene.fogMode = BABYLON.Scene.FOGMODE_EXP2 ;
+    scene.fogDensity = 0.025;
+    scene.fogStart = 50.0;
+    scene.fogEnd = 100.0;
+    scene.fogColor = new BABYLON.Color3(0.6, 0.7, 0.9);
 
     //Add meshes
     addModel(scene, 'shadowGenerator');
@@ -115,7 +122,7 @@ function MAIN_GFX_Start() {
         createGround: false,
         enableGroundShadow: false,
         groundYBias: 1,
-        groundOpacity: 0.1,
+        groundOpacity: 0,
     });
 
     engine.runRenderLoop(function() {
