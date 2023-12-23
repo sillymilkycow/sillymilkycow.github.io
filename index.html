@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Family</title>
+    <link href="./src/css/main.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div id="loadingScreen" class="loading-screen">
+		<img style="width:200px; height:200px;" src="./src/img/loading.gif"/>
+		<span>Подождите. Загрузка может занять несколько минут.</span>
+
+		<span>Идет загрузка: <span id="loadingPrecents">0</span>%</span>
+	</div>
+    <div id="game_window_scale" class="controll_panel">
+		<button id="reset-btn">Сброс</button>
+		<button id="move-btn">Move</button>
+	</div>
+    <canvas id="main_babylon_canvas"></canvas>
+	<script type="text/javascript" src="./src/js/loading.js"></script>
+	<script type="text/javascript" src="./src/js/babylon.js"></script>
+	<script>
+		//LOADING PRECENTEGES
+		window.dispatchEvent(new CustomEvent('setPrecenteges', {detail:{precents:10}}));
+	</script>
+	<script type="text/javascript" src="./src/js/babylon_import.js"></script>
+	<script>
+		//LOADING PRECENTEGES
+		window.dispatchEvent(new CustomEvent('setPrecenteges', {detail:{precents:15}}));
+	</script>
+	<script type="text/javascript" src="./src/js/babylon_pep.js"></script>
+	<script>
+		//LOADING PRECENTEGES
+		window.dispatchEvent(new CustomEvent('setPrecenteges', {detail:{precents:18}}));
+	</script>
+	<script type="text/javascript" src="./src/js/cannon.js"></script>
+	<script>
+		//LOADING PRECENTEGES
+		window.dispatchEvent(new CustomEvent('setPrecenteges', {detail:{precents:20}}));
+	</script>
+    <script type="text/javascript" src="./src/js/index.js"></script>
+</body>
+</html>
