@@ -15,10 +15,10 @@ function addModel(scene, shadowGenerator) {
             if (idx===1) {
                 mesh.checkCollisions = true;  
                 //shadowGenerator.addShadowCaster(mesh);
-                mesh.freezeWorldMatrix();
+                //mesh.freezeWorldMatrix();
             }
-            mesh.receiveShadows = true;
-        } );
+            //mesh.receiveShadows = true;
+        });
         //LOADING PRECENTEGES
 		window.dispatchEvent(new CustomEvent('setPrecenteges', {detail:{precents:100}}));
         hideLoadingScreen();
