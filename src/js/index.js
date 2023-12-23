@@ -54,7 +54,7 @@ function MAIN_SceneGenerator(engine, canvas) {
     light.position = new BABYLON.Vector3(-15, 15, 5);
     light.intensity = 5000;
     light.diffuse = new BABYLON.Color3(0.7, 0.7, 0.7);
-    light.specular = new BABYLON.Color3(0, 0, 0);*/
+    light.specular = new BABYLON.Color3(0, 0, 0);
     
     //const light = new BABYLON.DirectionalLight('light', new BABYLON.Vector3(2, -0.9, -1), scene);
     /*
@@ -71,7 +71,7 @@ function MAIN_SceneGenerator(engine, canvas) {
     //const box = BABYLON.MeshBuilder.CreateBox("box", {});
 
     //SKYBOX
-    addSkyBox(scene);
+    //addSkyBox(scene);
 
     //Add meshes
     addModel(scene, 'shadowGenerator');
