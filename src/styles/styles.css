@@ -1,0 +1,140 @@
+h1,
+h2 {
+    margin: 0 0 12px;
+}
+button {
+    transition: 0.3s;
+    cursor: pointer;
+    padding: 10px 5px;
+    outline: none;
+    border: none;
+    background-color: rgb(64, 126, 189);
+    color:#fff;
+    font-weight:bold;
+}
+button:hover {
+    background-color: rgb(102, 163, 224);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+input {
+    padding: 5px 0px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 0;
+    border: 1px solid rgba(0,0,0,0.3);
+    margin:0 0 10px;
+}
+input:focus {
+    border:1px solid #ff0;
+    outline:none;
+    background-color: #fff;
+    color:#009;
+    box-shadow: 0 0 25px rgba(0,0,0,0.9);
+}
+body {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    font-family: Tahoma, sans-serif;
+    background-color:#444;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+site-main-page {
+    display: block;
+    width: 100%;
+}
+
+/* * * MENU * * */
+site-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#eee;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
+}
+site-menu ul {
+    padding: 20px 0px;
+    display: flex;
+    flex-direction: row;
+}
+.menu-tab {
+    transition: 0.3s;
+    padding: 20px;
+    text-decoration: none;
+    color:#000;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+    color: #999;
+}
+.menu-tab:hover {
+    border-bottom: 4px solid #999;
+    color: rgb(64, 126, 189);
+    background-color:#fff;
+}
+.menu-tab.selected {
+    font-weight: bold;
+    color:#000;
+    border-bottom: 4px solid rgb(64, 126, 189);
+    background-color:#fff;
+}
+
+/* * * CONTENT * * */
+.page,
+page {
+    display: flex;
+    margin: 20px;
+    background-color: #fff;
+    padding: 30px;
+    box-shadow: 4px 4px 20px rgba(0,0,0,0.3);
+}
+
+site-footer {
+    background-color:#eee;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 20px;
+    font-size: 12px;
+    color:#999;
+}
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.abstract_input_field {
+    position:relative;
+    margin-bottom: 10px;
+}
+.abstract_input_field input {
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+
+
+
+
+.top_additionals {
+    transition: 0.3s;
+    padding-right: 10px;
+    font-size:10px;
+    color:#666;
+}
+.top_additionals:hover {
+    color:#000;
+}
