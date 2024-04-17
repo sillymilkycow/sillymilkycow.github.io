@@ -82,12 +82,15 @@ $tv.setComponent(
                     },
 
                     evaluateInput(){
+                        function clearAndPrepareStrToArr(str){
+                            return str.trim().toLowerCase().replace(/[.,;?!:&%$#@*()-+><]/g, '').split(' ');
+                        }
                         if ( this.checkObj && this.checkObj.translate ) {
                             let self = this;
                                 self.wordsEvaluation = [];
                                 self.currentEvaluation = 0;
-                            let originalLang = this.checkObj.lang.trim().toLowerCase().split(' ');
-                            let checkInput = this.currentInput.replace(/\s+/g, ' ').trim().toLowerCase().split(' ');
+                            let originalLang = clearAndPrepareStrToArr( this.checkObj.lang );
+                            let checkInput = clearAndPrepareStrToArr( this.currentInput.replace(/\s+/g, ' ') );
                             originalLang.forEach( (word, idx) => {
                                 let wordObj = { word: word, score: 0 };
                                 if (word===checkInput[idx]) {
