@@ -14,12 +14,14 @@ class TopAdditionals extends HTMLElement {
                 lastAbstract: 0,
                 lastAssessment: 0,
                 levels: [
-                    { title: 'Newbie', icon: '🐣', score: 10 },
-                    { title: 'Beginner', icon: '🐥', score: 30 },
-                    { title: 'Hello-Goodbye', icon: '🐓', score: 60 },
-                    { title: 'Where is a toilet', icon: '🐵', score: 100 },
-                    { title: 'I can talk', icon: '🐨', score: 150 },
-                    { title: 'Walky talky', icon: '🐯', score: 250 },
+                    { title: 'Newbie', icon: '🐣', score: 0 },
+                    { title: 'Beginner', icon: '🐥', score: 20 },
+                    { title: 'You know something', icon: '🐢', score: 40 },
+                    { title: 'You could find the Żabką', icon: '🐸', score: 70 },
+                    { title: 'Walky-Talky', icon: '🐵', score: 100 },
+                    { title: 'Good-looking', icon: '🦉', score: 150 },
+                    { title: 'Tigerrr', icon: '🐯', score: 250 },
+                    { title: 'Stunning', icon: '🦄', score: 400 },
                 ],
 
                 init(){
