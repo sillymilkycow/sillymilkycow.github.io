@@ -128,13 +128,39 @@ site-footer {
 
 
 
-
-.top_additionals {
+.top_additionals_block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-right: 10px;
     transition: 0.3s;
-    padding-right: 10px;
+    padding: 5px;
     font-size:10px;
     color:#666;
+    cursor: pointer;
 }
-.top_additionals:hover {
+.top_additionals_block:hover {
     color:#000;
+}
+.top_additionals {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
+}
+.t-a_row {
+    display: flex;
+    flex-direction:row;
+    gap:5px;
+    align-items:center;
+    font-size:8px; 
+}
+.t-a_row:first-child {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size:10px; 
+}
+.row-icon {
+    font-size: 30px;
 }

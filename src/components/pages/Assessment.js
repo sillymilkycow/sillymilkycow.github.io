@@ -110,7 +110,7 @@ $tv.setComponent(
                                 self.checkObj['average_score'] = self.currentEvaluation;
                             }
                             let curDate = new Date();
-                                curDate = curDate.getFullYear()+'-'+curDate.getMonth()+'-'+curDate.getDate();
+                                curDate = curDate.getFullYear()+'-'+(curDate.getMonth()+1)+'-'+curDate.getDate();
                             self.checkObj['last_check'] = curDate;
                             // *********** end: Save evaluation results of fraze ***********
 
@@ -213,7 +213,8 @@ $tv.setComponent(
                                 -->
                             </div>
                             <template x-if="datesArr.length">
-                                <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+                                <div @click="isByDate=!isByDate"
+                                     style="display:flex; flex-direction:row; align-items:center; gap:5px; cursor: pointer;">
                                     <span style="white-space: nowrap; font-size:12px; margin-left:20px;">Group by date:</span>
                                     <input style="max-width:16px; height:16px; margin:0;" 
                                         type="checkbox"
@@ -222,7 +223,8 @@ $tv.setComponent(
                                     >
                                 </div>
                             </template>
-                            <div style="display:flex; flex-direction:row; align-items:center; gap:5px;">
+                            <div @click="isTillRemember=!isTillRemember" 
+                                 style="display:flex; flex-direction:row; align-items:center; gap:5px; cursor: pointer;">
                                 <span style="white-space: nowrap; font-size:12px; margin-left:20px;">Till remember:</span>
                                 <input style="max-width:16px; height:16px; margin:0;" 
                                     type="checkbox"

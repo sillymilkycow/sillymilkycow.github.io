@@ -15,6 +15,10 @@ $tv.setComponent(
                         let self = this;
                         let strPath = window.location.pathname.split('/');
                             strPath = strPath[strPath.length-1];
+                        if (!strPath) {
+                            this.selectedIdx = 0;
+                            return;
+                        }
                         this.menuArr.forEach( (elem, idx) => {
                             if (elem.url.indexOf(strPath) >= 0) {
                                 self.selectedIdx = idx;

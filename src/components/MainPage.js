@@ -29,7 +29,7 @@ $tv.setComponent(
                         let myLang = difLangStr.length > 1 ? difLangStr[1].trim() : '';
                             difLangStr = difLangStr[0].trim();
                         let curDate = new Date();
-                            curDate = curDate.getFullYear()+'-'+curDate.getMonth()+'-'+curDate.getDate();
+                            curDate = curDate.getFullYear()+'-'+(curDate.getMonth()+1)+'-'+curDate.getDate();
 
                         this.data.words_pares.push(
                             { translate: handleSpaces(difLangStr), lang: handleSpaces(myLang), date: curDate }
