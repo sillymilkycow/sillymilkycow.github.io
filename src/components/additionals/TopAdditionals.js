@@ -65,9 +65,9 @@ class TopAdditionals extends HTMLElement {
                         let days = returnMePowerDays(el.date ? this.countDaysDiff(el.date) : daysPower);
                         let assessmentDays = returnMePowerDays(el.last_check ? this.countDaysDiff(el.last_check) : daysPower);
                         days = days - assessmentDays;
-                        days = days < 0 ? 0 : days;
+                        days = days < 1 ? 1 : days;
                         let elScore = el.average_score * days;
-                        // console.log(el.translate+' : '+elScore);
+                        //console.log(el.translate+' : '+elScore);
                         self.score += elScore;
                     });
                     this.calculateLevel();
