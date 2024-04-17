@@ -118,11 +118,11 @@ class TopAdditionals extends HTMLElement {
                             </div>
                             <div class="t-a_row">
                                 <span>Last abstract fill:</span>
-                                <span x-text="lastAbstract"></span>
+                                <span x-text="lastAbstract+' day'+(lastAbstract!==1?'s':'')+' ago'"></span>
                             </div>
                             <div class="t-a_row">
                                 <span>Last assessment:</span>
-                                <span x-text="lastAssessment"></span>
+                                <span x-text="lastAssessment+' day'+(lastAssessment!==1?'s':'')+' ago'"></span>
                             </div>
                         </div>
                         <span class="row-icon" x-text="levels[level].icon"></span>
