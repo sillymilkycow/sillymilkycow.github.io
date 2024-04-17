@@ -86,11 +86,11 @@ class TopAdditionals extends HTMLElement {
                 },
 
                 checkAssessmentLastDate(lastDateStr){
-                    this.lastAssessment = this.countDaysDiff(lastDateStr);
+                    this.lastAssessment = this.countDaysDiff(lastDateStr)-1;
                 },
 
                 checkAbstractFillLastDate(lastDateStr){
-                    this.lastAbstract = this.countDaysDiff(lastDateStr);
+                    this.lastAbstract = this.countDaysDiff(lastDateStr)-1;
                 },
 
                 addHookEvents(){
