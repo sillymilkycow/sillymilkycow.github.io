@@ -9,6 +9,7 @@ class TopAdditionals extends HTMLElement {
                 curDate: curDate,
                 loaded: false,
                 data: {},
+                nextLevelScore: null,
                 score: 0,
                 level: 0,
                 lastAbstract: 0,
@@ -77,12 +78,20 @@ class TopAdditionals extends HTMLElement {
                 calculateLevel(){
                     let self = this;
                     let daysPower = this.daysPower;
+                    function calcScore(num){
+                        return num * daysPower * 4; /* 4 - max evaluation in assessment */
+                    }
                     this.levels.forEach( ( lvl, idx ) => {
-                        let plank = lvl.score * daysPower * 4; /* 4 - max evaluation in assessment */
+                        let plank = calcScore( lvl.score );
                         if ( self.score >= plank ) {
                             self.level = idx;
+                            self.nextLevelScore = self.levels[idx+1] ? calcScore(self.levels[idx+1].score) : null;
                         }
                     });
+                },
+
+                calcLvlPrcntsStyle(){
+                    return ( (this.score*100) / this.nextLevelScore )+'%';
                 },
 
                 checkAssessmentLastDate(lastDateStr){
@@ -111,15 +120,16 @@ class TopAdditionals extends HTMLElement {
             <div x-data="${component}">
                 <template x-if="loaded">
                     <div class="top_additionals_block">
-                        <div class="top_additionals" x-bind:title="levels[level].title">
+                        <div class="top_additionals" x-bind:title="levels[level].title + ' ('+score+')'">
                             <div class="t-a_row">
                                 <span>Level:</span>
                                 <span x-text="level"></span>
                             </div>
-                            <div class="t-a_row">
-                                <span>Score:</span>
-                                <span x-text="score"></span>
-                            </div>
+                            <template x-if="nextLevelScore">
+                                <div class="level-indicator">
+                                    <div x-bind:style=" { width: calcLvlPrcntsStyle() } "></div>
+                                </div>
+                            </template>
                             <div class="t-a_row">
                                 <span>Last abstract fill:</span>
                                 <span x-text="lastAbstract+' day'+(lastAbstract!==1?'s':'')+' ago'"></span>
