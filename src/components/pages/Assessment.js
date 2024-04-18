@@ -23,6 +23,7 @@ $tv.setComponent(
                         0: ['😾 Are you serious?', '👹 Booo for you...', '😿 No way...', '💩 Holly shmolly...', '🙀 Ouh my...', '🤕 Shame on you...']
                     },
                     showMotivation: '',
+                    isByWeak: false,
                     isByDate: false,
                     selectedDate: null,
                     datesArr: [],
@@ -141,6 +142,15 @@ $tv.setComponent(
                         if (this.isByDate) {
                             newArr = newArr.filter( el => el.date === self.selectedDate );
                         }
+                        if (this.isByWeak) {
+                            newArr = newArr.filter( el => {
+                                if (!el.average_score) { return false; }
+                                if (el.average_score < 4) { return true; }
+                                return false;
+                            } );
+                            newArr = newArr.sort( (a,b) => a.average_score - b.average_score );
+                        }
+                        this.selectedIdx = -1;
                         this.arrayForRender = newArr;
                         this.unprepared = false;
                     },
@@ -196,7 +206,30 @@ $tv.setComponent(
 
                     <div class="title">
                         <h2>Assessment</h2>
-                        <div style="display: flex; flex-direction:row; justify-content:end; gap:5px; align-items:center;">
+                        <template x-if="isByDate || isTillRemember || isByWeak">
+                            <div class="active-filters-bar">
+                                <template x-if="isByWeak">
+                                    <span style="font-size:22px;">🤕</span>
+                                </template>
+                                <template x-if="isTillRemember">
+                                    <span style="font-size:22px;">🐵</span>
+                                </template>
+                                <template x-if="isByDate">
+                                    <div style="display:flex; gap:4px; padding:4px; background-color:rgb(64, 126, 189); border-radius:6px;">
+                                        <span>🗓</span>
+                                        <select x-model="selectedDate" @change="changePreparation()">
+                                            <template x-for="el in datesArr">
+                                                <option x-bind:value="el.date" x-text="el.date"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="filters-settings">
+                        <div style="width: 170px;">
                             <div class="display: flex; flex-direction:row; gap:5px; align-items:center;">
                                 <span x-text="selectedIdx+1"></span> /
                                 <span x-text="arrayForRender && arrayForRender.length"></span>
@@ -217,45 +250,34 @@ $tv.setComponent(
                                 </template>
                                 -->
                             </div>
-                            <template x-if="datesArr.length">
-                                <div @click="isByDate=!isByDate"
-                                     style="display:flex; flex-direction:row; align-items:center; gap:5px; cursor: pointer;">
-                                    <span style="white-space: nowrap; font-size:12px; margin-left:20px;">Group by date:</span>
-                                    <input style="max-width:16px; height:16px; margin:0;" 
-                                        type="checkbox"
-                                        x-model="isByDate"
-                                        @change="changePreparation()"
-                                    >
-                                </div>
-                            </template>
-                            <div @click="isTillRemember=!isTillRemember" 
-                                 style="display:flex; flex-direction:row; align-items:center; gap:5px; cursor: pointer;">
-                                <span style="white-space: nowrap; font-size:12px; margin-left:20px;">Till remember:</span>
-                                <input style="max-width:16px; height:16px; margin:0;" 
-                                    type="checkbox"
-                                    x-model="isTillRemember"
+                        </div>
+                        <template x-if="datesArr.length">
+                            <div @click="isByDate=!isByDate"
+                                class="filter-checkbox">
+                                <span style="">Group by date:</span>
+                                <input type="checkbox"
+                                       x-model="isByDate"
+                                       @change="changePreparation()"
                                 >
                             </div>
+                        </template>
+                        <div @click="isTillRemember=!isTillRemember" 
+                             class="filter-checkbox">
+                            <span>Till remember:</span>
+                            <input type="checkbox"
+                                   x-model="isTillRemember"
+                            >
+                        </div>
+                        <div @click="isByWeak=!isByWeak" 
+                             class="filter-checkbox">
+                            <span>Weakests:</span>
+                            <input type="checkbox"
+                                   x-model="isByWeak"
+                                   @change="changePreparation()"
+                            >
                         </div>
                     </div>
 
-                    <template x-if="isByDate || isTillRemember">
-                        <div style="display:flex; justify-content:end; gap:8px; margin:-5px 0px 5px;">
-                            <template x-if="isTillRemember">
-                                <span style="font-size:22px;">🐵</span>
-                            </template>
-                            <template x-if="isByDate">
-                                <div style="display:flex; gap:4px; padding:4px; background-color:rgb(64, 126, 189); border-radius:6px;">
-                                    <span>🗓</span>
-                                    <select x-model="selectedDate" @change="changePreparation()">
-                                        <template x-for="el in datesArr">
-                                            <option x-bind:value="el.date" x-text="el.date"></option>
-                                        </template>
-                                    </select>
-                                </div>
-                            </template>
-                        </div>
-                    </template>
 
                     <div class="assessment-block">
                         <template x-if="checkObj">
