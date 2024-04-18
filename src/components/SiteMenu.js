@@ -7,9 +7,9 @@ $tv.setComponent(
                 return {
                     selectedIdx: null,
                     menuArr: [
-                        {title:'📔 Abstract', url:'/index.html'},
-                        {title:'📝 Assessment', url:'/pages/page1.html'},
-                        {title:'🪧 About', url:'/pages/about.html'},
+                        {title:'Abstract', url:'/index.html', icon: '📔'},
+                        {title:'Assessment', url:'/pages/page1.html', icon: '📝'},
+                        {title:'About', url:'/pages/about.html', icon: '🪧'},
                     ],
                     init(){
                         let self = this;
@@ -33,13 +33,15 @@ $tv.setComponent(
                     <ul>
                         <template x-for="(item, idx) in menuArr">
                             <li>
-                                <a  x-text="item.title" 
-                                    x-bind:href="item.url"
+                                <a  x-bind:href="item.url"
                                     :class="{
                                         'selected' : selectedIdx === idx
                                     }"
                                     class="menu-tab"
-                                ></a>
+                                >
+                                    <span class="icon" x-text="item.icon"></span>
+                                    <span class="text" x-text="item.title"></span>
+                                </a>
                             </li>
                         </template>
                     </ul>

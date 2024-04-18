@@ -86,6 +86,15 @@ site-menu ul {
     border-bottom: 4px solid rgb(64, 126, 189);
     background-color:#fff;
 }
+@media (max-width:767px) {
+    .menu-tab .text {
+        display:none;
+    }
+    .menu-tab.selected .text {
+        display:inline-block;
+        font-size:10px;
+    }
+}
 
 /* * * CONTENT * * */
 .page,
