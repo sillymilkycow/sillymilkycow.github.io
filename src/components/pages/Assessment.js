@@ -7,6 +7,7 @@ $tv.setComponent(
 
             const component = function(){
                 return {
+                    isComponentLoaded: false,
                     checkObj: null,
                     currentInput: '',
                     type: 0,
@@ -172,13 +173,14 @@ $tv.setComponent(
                     addHookEvents(){
                         let self = this;
                         window.addEventListener('app-updated', function(e) {
-                            if (e.detail && e.detail.data && e.detail.data.words_pares) {
+                            if (!self.isComponentLoaded && e.detail && e.detail.data && e.detail.data.words_pares) {
                                 self.data = { 
                                     ...self.data, 
                                     words_pares: e.detail.data.words_pares 
                                 };
                                 self.prepareDatesArr();
                                 self.prepareArrayForRender();
+                                self.isComponentLoaded = true;
                             }
                         });
                         window.addEventListener('check_comp', function(){
