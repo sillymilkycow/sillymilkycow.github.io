@@ -10,6 +10,7 @@ $tv.setComponent(
                     selectedDate: null,
                     datesArr: [],
                     updatesCount: 0,
+                    hoverID: null,
                     data: {},
 
                     init(){
@@ -19,9 +20,15 @@ $tv.setComponent(
                     prepareDatesArr(){
                         if (this.updatesCount < 2) {
                             let newArr = [...this.data.words_pares];
-                            newArr = newArr.sort( (a, b) => { 
+                            let COUNTCHECK = 0;
+                            newArr = newArr.sort( (a, b) => {
+                                b['id'] = COUNTCHECK;
+                                COUNTCHECK++;
                                 return new Date(b.date)-new Date(a.date); 
                             });
+                            if (newArr.length && newArr[newArr.length-1]) {
+                                newArr[newArr.length-1]['id'] = COUNTCHECK;
+                            }
                             let prevDate = '';
                             newArr = newArr.filter( el => {
                                 if (el.date!==prevDate) { 
@@ -77,11 +84,15 @@ $tv.setComponent(
                     <template x-if="data.words_pares && data.words_pares.length">
                         <div class="words-column">
                             <template x-for="el in data.words_pares.filter( el => el.date === selectedDate )">
-                                <div x-bind:class="'string-row evaluation_'+( el.average_score || el.average_score===0 ? el.average_score : 'none')">
-                                    <div class="translate">
-                                        <span x-text="el.translate"></span>
-                                        <input type="text" x-model="el.translate" @keyup.enter="callUpdate()"/>
-                                    </div>
+                                <div x-bind:class="'string-row evaluation_'+( el.average_score || el.average_score===0 ? el.average_score : 'none')"
+                                     @click="hoverID = el.id" @mouseleave="hoverID = null"
+                                >   
+                                    <template x-if="el.id === hoverID">
+                                        <div class="translate">
+                                            <span x-text="el.translate"></span>
+                                            <input type="text" x-model="el.translate" @keyup.enter="callUpdate()"/>
+                                        </div>
+                                    </template>
                                     <div class="lang" x-text="el.lang"></div>
                                 </div>
                             </template>

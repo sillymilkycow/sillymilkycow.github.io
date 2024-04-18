@@ -8,6 +8,7 @@ $tv.setComponent(
             const component = function(){
                 return {
                     currentInput: '',
+                    alert: '',
                     data: {
                         words_pares: []
                     },
@@ -26,6 +27,15 @@ $tv.setComponent(
                         if ( !this.currentInput ) { return; }
 
                         let difLangStr = this.currentInput.trim().split('+++');
+
+                        if (difLangStr.length<2) {
+                            this.alert = 'Пример строки<b>+++</b>Exaple string'
+                            setTimeout(()=>{
+                                this.alert = '';
+                            }, 3000);
+                            return;
+                        }
+
                         let myLang = difLangStr.length > 1 ? difLangStr[1].trim() : '';
                             difLangStr = difLangStr[0].trim();
                         let curDate = new Date();
@@ -62,6 +72,10 @@ $tv.setComponent(
             this.innerHTML = /*html*/`
                 <div x-data="${component}">
                     <h2>Abstract</h2>
+                    <template x-if="alert">
+                        <div style="color:#f00; position:relative; z-index:10; background-color:#faa; padding:10px;" 
+                             x-html="'ENTER: '+alert"></div>
+                    </template>
                     <div class="abstract_input_field">
                         <input @keyup.enter="handleEnter()" 
                                x-model="currentInput"
