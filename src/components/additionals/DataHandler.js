@@ -18,7 +18,6 @@ $tv.setComponent(
                     },
 
                     saveStorage(){
-                        console.log(this.data['words_pares']);
                         window.localStorage.setItem( this.storageId, JSON.stringify(this.data) );
                         this.callUpdate();
                     },
