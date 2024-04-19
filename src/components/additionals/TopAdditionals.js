@@ -9,6 +9,7 @@ class TopAdditionals extends HTMLElement {
                 curDate: curDate,
                 loaded: false,
                 data: {},
+                previousLevelScore: 0,
                 nextLevelScore: null,
                 score: 0,
                 level: 0,
@@ -84,6 +85,7 @@ class TopAdditionals extends HTMLElement {
                     this.levels.forEach( ( lvl, idx ) => {
                         let plank = calcScore( lvl.score );
                         if ( self.score >= plank ) {
+                            self.previousLevelScore = calcScore(lvl.score);
                             self.level = idx;
                             self.nextLevelScore = self.levels[idx+1] ? calcScore(self.levels[idx+1].score) : null;
                         }
@@ -91,7 +93,7 @@ class TopAdditionals extends HTMLElement {
                 },
 
                 calcLvlPrcntsStyle(){
-                    return ( (this.score*100) / this.nextLevelScore )+'%';
+                    return ( ( (this.score-this.previousLevelScore)*100 ) / (this.nextLevelScore-this.previousLevelScore) )+'%';
                 },
 
                 checkAssessmentLastDate(lastDateStr){

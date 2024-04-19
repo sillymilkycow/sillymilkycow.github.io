@@ -311,7 +311,6 @@ $tv.setComponent(
                     </template>
 
                 </div>
-                <link href="/src/styles/assessment.css" rel="stylesheet" type="text/css">
             `;
         }
     }
