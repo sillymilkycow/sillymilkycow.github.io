@@ -252,28 +252,26 @@ $tv.setComponent(
                             </div>
                         </div>
                         <template x-if="datesArr.length">
-                            <div @click="isByDate=!isByDate"
+                            <div @click="isByDate=!isByDate; changePreparation();"
                                 class="filter-checkbox">
                                 <span style="">Group by date:</span>
                                 <input type="checkbox"
                                        x-model="isByDate"
-                                       @change="changePreparation()"
                                 >
                             </div>
                         </template>
-                        <div @click="isTillRemember=!isTillRemember" 
+                        <div @click="isTillRemember=!isTillRemember;" 
                              class="filter-checkbox">
                             <span>Till remember:</span>
                             <input type="checkbox"
                                    x-model="isTillRemember"
                             >
                         </div>
-                        <div @click="isByWeak=!isByWeak" 
+                        <div @click="isByWeak=!isByWeak; changePreparation();" 
                              class="filter-checkbox">
                             <span>Weakests:</span>
                             <input type="checkbox"
                                    x-model="isByWeak"
-                                   @change="changePreparation()"
                             >
                         </div>
                     </div>
