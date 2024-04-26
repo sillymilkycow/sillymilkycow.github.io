@@ -9,7 +9,10 @@ $tv.setComponent(
                 return {
                     currentInput: '',
                     alert: '',
+                    selectedTopic: 0,
                     data: {
+                        selectedTopic: 0,
+                        availableTopics: [{ id: 0, title: 'All' }],
                         words_pares: []
                     },
 
@@ -18,6 +21,7 @@ $tv.setComponent(
                     },
 
                     handleEnter(){
+                        let self = this;
 
                         function handleSpaces(str){
                             return str.replace(/\s+/g, ' ');
@@ -42,7 +46,7 @@ $tv.setComponent(
                             curDate = curDate.getFullYear()+'-'+(curDate.getMonth()+1)+'-'+curDate.getDate();
 
                         this.data.words_pares.push(
-                            { translate: handleSpaces(difLangStr), lang: handleSpaces(myLang), date: curDate }
+                            { translate: handleSpaces(difLangStr), lang: handleSpaces(myLang), date: curDate, selectedTopic: self.selectedTopic }
                         );
 
                         this.clearInput();
@@ -55,7 +59,22 @@ $tv.setComponent(
 
                     callUpdate(){
                         let self = this;
+                        self.data.selectedTopic = self.selectedTopic*1;
                         window.dispatchEvent( new CustomEvent( 'data-save-storage', { detail: { data: self.data } } ) );
+                    },
+
+                    addNewTopic(){
+                        let newTopic = prompt('Enter new topics name');
+                        newTopic = newTopic ? newTopic.trim() : '';
+                        if (!newTopic) { return; }
+                        let newArr = [...this.data.availableTopics].sort( (a,b) => b.id-a.id );
+                        let newID = newArr[0].id+1;
+                        this.data.availableTopics.push({
+                            id: newID,
+                            title: newTopic
+                        });
+                        this.data.selectedTopic = newID;
+                        this.callUpdate();
                     },
 
                     addHookEvents(){
@@ -64,6 +83,7 @@ $tv.setComponent(
                             if (e.detail && e.detail.data) {
                                 self.data = { ...self.data, ...e.detail.data };
                             }
+                            self.selectedTopic =  self.data.selectedTopic ?  self.data.selectedTopic*1 : 0;
                         });
                     }
                 }
@@ -71,7 +91,22 @@ $tv.setComponent(
             
             this.innerHTML = /*html*/`
                 <div x-data="${component}">
-                    <h2>Abstract</h2>
+                    <div class="row-between w-full">
+                        <h2>Abstract</h2>
+                        <template x-if="data.availableTopics.length">
+                            <div class="row-between" style="border:1px solid #000; background-color:#000;">
+                                <select x-model="selectedTopic" @change="callUpdate()">
+                                    <template x-for="topic in data.availableTopics">
+                                        <option :value="topic.id"
+                                                x-text="topic.title"
+                                                :selected=" topic.id === selectedTopic ">
+                                        </option>
+                                    </template>
+                                </select>
+                                <button style="font-size:8px;" x-on:click="addNewTopic()">ADD TOPIC</button>
+                            </div>
+                        </template>
+                    </div>
                     <template x-if="alert">
                         <div style="color:#f00; position:relative; z-index:10; background-color:#faa; padding:10px;" 
                              x-html="'ENTER: '+alert"></div>

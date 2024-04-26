@@ -7,11 +7,13 @@ $tv.setComponent(
 
             const component = function() {
                 return {
+                    selectedTopic: 0,
                     selectedDate: null,
                     datesArr: [],
                     updatesCount: 0,
                     hoverID: null,
                     data: {},
+                    renderArr: [],
 
                     init(){
                         this.addHookEvents();
@@ -45,18 +47,30 @@ $tv.setComponent(
 
                     callUpdate(){
                         let self = this;
+                        self.data.selectedTopic = self.selectedTopic*1;
                         window.dispatchEvent( new CustomEvent( 'data-save-storage', { detail: { data: self.data } } ) );
+                    },
+
+                    renderItemsByFilters(){
+                        let self = this;
+                        this.selectedTopic = this.selectedTopic*1;
+                        this.renderArr = this.data.words_pares.filter( el => {
+                            if (el.date === self.selectedDate) {
+                                if ( !self.selectedTopic ) { return true; }
+                                return self.selectedTopic === el.selectedTopic;
+                            }
+                            return false;
+                        });
                     },
 
                     addHookEvents(){
                         let self = this;
                         window.addEventListener('app-updated', function(e) {
-                            if (e.detail && e.detail.data && e.detail.data.words_pares) {
-                                self.data = { 
-                                    ...self.data, 
-                                    words_pares: e.detail.data.words_pares 
-                                };
+                            if (e.detail && e.detail.data) {
+                                self.data = { ...self.data, ...e.detail.data };
+                                self.selectedTopic = self.data.selectedTopic ?  self.data.selectedTopic*1 : 0;
                                 self.prepareDatesArr();
+                                self.renderItemsByFilters();
                             }
                         });
                     }
@@ -71,19 +85,34 @@ $tv.setComponent(
                               x-text="'🪙 '+(data.words_pares ? data.words_pares.length : 0)"
                         ></span>
                     </div>
-                    <template x-if="datesArr && datesArr.length">
-                        <div style="display:flex; justify-content:end; align-items:center; margin:-5px 0px 5px;">
-                            <span style="margin-right:5px; font-size:12px;">Render date:</span>
-                            <select x-model="selectedDate">
-                                <template x-for="el in datesArr">
-                                    <option x-bind:value="el.date" x-text="el.date"></option>
-                                </template>
-                            </select>
-                        </div>
-                    </template>
+                    <div style="display:flex; flex-direction:row; align-items:center; justify-content:end; gap:15px; margin:-5px 0px 5px;">
+                        <template x-if="datesArr && datesArr.length">
+                            <div style="display:flex; justify-content:end; align-items:center;">
+                                <span style="margin-right:5px; font-size:12px;">Render date:</span>
+                                <select x-model="selectedDate" @change="renderItemsByFilters()">
+                                    <template x-for="el in datesArr">
+                                        <option x-bind:value="el.date" x-text="el.date"></option>
+                                    </template>
+                                </select>
+                            </div>
+                        </template>
+                        <template x-if="data.availableTopics && data.availableTopics.length">
+                            <div>
+                                <span style="margin-right:5px; font-size:12px;">Group:</span>
+                                <select x-model="selectedTopic" @change="renderItemsByFilters()">
+                                    <template x-for="topic in data.availableTopics">
+                                        <option :value="topic.id"
+                                                x-text="topic.title"
+                                                :selected=" topic.id === selectedTopic ">
+                                        </option>
+                                    </template>
+                                </select>
+                            </div>
+                        </template>
+                    </div>
                     <template x-if="data.words_pares && data.words_pares.length">
                         <div class="words-column">
-                            <template x-for="el in data.words_pares.filter( el => el.date === selectedDate )">
+                            <template x-for="el in renderArr">
                                 <div x-bind:class="'string-row evaluation_'+( el.average_score || el.average_score===0 ? el.average_score : 'none')"
                                      @click="hoverID = el.id" @mouseleave="hoverID = null"
                                 >   

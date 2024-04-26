@@ -29,6 +29,7 @@ $tv.setComponent(
                     datesArr: [],
                     updatesCount: 0,
                     selectedIdx: 0,
+                    selectedTopic: 0,
                     arrayForRender: [],
                     unprepared: true,
                     evaluated: true,
@@ -138,7 +139,11 @@ $tv.setComponent(
                     prepareArrayForRender(){
                         let self = this;
                         let newArr = [];
+                        this.selectedTopic = this.selectedTopic*1;
                         newArr = self.data.words_pares ? [...self.data.words_pares] : [];
+                        if (this.selectedTopic) {
+                            newArr = newArr.filter( el => el.selectedTopic === self.selectedTopic );
+                        }
                         if (this.isByDate) {
                             newArr = newArr.filter( el => el.date === self.selectedDate );
                         }
@@ -183,11 +188,9 @@ $tv.setComponent(
                     addHookEvents(){
                         let self = this;
                         window.addEventListener('app-updated', function(e) {
-                            if (!self.isComponentLoaded && e.detail && e.detail.data && e.detail.data.words_pares) {
-                                self.data = { 
-                                    ...self.data, 
-                                    words_pares: e.detail.data.words_pares 
-                                };
+                            if (!self.isComponentLoaded && e.detail && e.detail.data) {
+                                self.data = { ...self.data, ...e.detail.data };
+                                self.selectedTopic = self.data.selectedTopic ?  self.data.selectedTopic : 0;
                                 self.prepareDatesArr();
                                 self.prepareArrayForRender();
                                 self.isComponentLoaded = true;
@@ -217,7 +220,7 @@ $tv.setComponent(
                                 <template x-if="isByDate">
                                     <div style="display:flex; gap:4px; padding:4px; background-color:rgb(64, 126, 189); border-radius:6px;">
                                         <span>🗓</span>
-                                        <select x-model="selectedDate" @change="changePreparation()">
+                                        <select style="height:20px; padding:2px;" x-model="selectedDate" @change="changePreparation()">
                                             <template x-for="el in datesArr">
                                                 <option x-bind:value="el.date" x-text="el.date"></option>
                                             </template>
@@ -228,6 +231,18 @@ $tv.setComponent(
                         </template>
                     </div>
 
+                    <template x-if="data.availableTopics && data.availableTopics.length">
+                        <div class="filters-settings">
+                            <select style="width:100%;" x-model="selectedTopic" @change="changePreparation()">
+                                <template x-for="topic in data.availableTopics">
+                                    <option :value="topic.id"
+                                            x-text="topic.title"
+                                            :selected=" topic.id === selectedTopic ">
+                                    </option>
+                                </template>
+                            </select>
+                        </div>
+                    </template>
                     <div class="filters-settings">
                         <div style="width: 170px;">
                             <div class="display: flex; flex-direction:row; gap:5px; align-items:center;">
@@ -238,17 +253,6 @@ $tv.setComponent(
                                         <option :value="idx" x-text="type"></option>
                                     </template>
                                 </select>
-                                <!--
-                                <select x-model="groupCount" @click="handleGroup()" style="margin-left:10px;">
-                                    <option value="">all</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="10">20</option>
-                                </select>
-                                <template x-if="groupCount">
-                                    <button>Next</button>
-                                </template>
-                                -->
                             </div>
                         </div>
                         <template x-if="datesArr.length">
@@ -275,7 +279,6 @@ $tv.setComponent(
                             >
                         </div>
                     </div>
-
 
                     <div class="assessment-block">
                         <template x-if="checkObj">
