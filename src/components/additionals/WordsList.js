@@ -19,8 +19,10 @@ $tv.setComponent(
                         this.addHookEvents();
                     },
 
-                    prepareDatesArr(){
-                        if (this.updatesCount < 2) {
+                    prepareDatesArr(force){
+                        let self = this;
+                        self.selectedTopic = self.selectedTopic*1;
+                        if (this.updatesCount < 2 || force) {
                             let newArr = [...this.data.words_pares];
                             let COUNTCHECK = 0;
                             newArr = newArr.sort( (a, b) => {
@@ -33,6 +35,11 @@ $tv.setComponent(
                             }
                             let prevDate = '';
                             newArr = newArr.filter( el => {
+                                if (self.selectedTopic) {
+                                    if (self.selectedTopic!==el.selectedTopic) {
+                                        return false;
+                                    }
+                                }
                                 if (el.date!==prevDate) { 
                                     prevDate = el.date;
                                     return true; 
@@ -54,7 +61,7 @@ $tv.setComponent(
                     renderItemsByFilters(){
                         let self = this;
                         this.selectedTopic = this.selectedTopic*1;
-                        this.renderArr = this.data.words_pares.filter( el => {
+                        this.renderArr = [...this.data.words_pares].filter( el => {
                             if (el.date === self.selectedDate) {
                                 if ( !self.selectedTopic ) { return true; }
                                 return self.selectedTopic === el.selectedTopic;
@@ -99,7 +106,7 @@ $tv.setComponent(
                         <template x-if="data.availableTopics && data.availableTopics.length">
                             <div>
                                 <span style="margin-right:5px; font-size:12px;">Group:</span>
-                                <select x-model="selectedTopic" @change="renderItemsByFilters()">
+                                <select x-model="selectedTopic" @change="prepareDatesArr(true); renderItemsByFilters();">
                                     <template x-for="topic in data.availableTopics">
                                         <option :value="topic.id"
                                                 x-text="topic.title"

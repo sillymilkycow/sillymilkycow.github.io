@@ -12,7 +12,7 @@ $tv.setComponent(
                     selectedTopic: 0,
                     data: {
                         selectedTopic: 0,
-                        availableTopics: [{ id: 0, title: 'All' }],
+                        availableTopics: [{ id: 0, title: 'No topic' }],
                         words_pares: []
                     },
 

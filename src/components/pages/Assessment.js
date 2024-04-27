@@ -160,14 +160,21 @@ $tv.setComponent(
                         this.unprepared = false;
                     },
 
-                    prepareDatesArr(){
-                        if (this.updatesCount < 2) {
+                    prepareDatesArr(force){
+                        let self = this;
+                        self.selectedTopic = self.selectedTopic*1;
+                        if (this.updatesCount < 2 || force) {
                             let newArr = [...this.data.words_pares];
                             newArr = newArr.sort( (a, b) => { 
                                 return new Date(b.date)-new Date(a.date); 
                             });
                             let prevDate = '';
                             newArr = newArr.filter( el => {
+                                if (self.selectedTopic) {
+                                    if (self.selectedTopic!==el.selectedTopic) {
+                                        return false;
+                                    }
+                                }
                                 if (el.date!==prevDate) { 
                                     prevDate = el.date;
                                     return true; 
@@ -233,7 +240,7 @@ $tv.setComponent(
 
                     <template x-if="data.availableTopics && data.availableTopics.length">
                         <div class="filters-settings">
-                            <select style="width:100%;" x-model="selectedTopic" @change="changePreparation()">
+                            <select style="width:100%;" x-model="selectedTopic" @change="prepareDatesArr(true); changePreparation()">
                                 <template x-for="topic in data.availableTopics">
                                     <option :value="topic.id"
                                             x-text="topic.title"
