@@ -48,6 +48,7 @@ class TopAdditionals extends HTMLElement {
 
                 claculateScore(){
                     if (!this.data.words_pares) { return; }
+                    this.resetScore();
                     let daysPower = this.daysPower;
                     let self = this;
                     let data = this.data.words_pares;
@@ -63,13 +64,13 @@ class TopAdditionals extends HTMLElement {
                     let allStrings = data.length;
                     let negatives = 0;
                     data.forEach( el => {
-                        if (!el.average_score) { return; }
+                        if ( !el.average_score ) { return; }
+                        if ( self.data.selectedTopic && (self.data.selectedTopic !== el.selectedTopic) ) { return; }
                         let days = returnMePowerDays(el.date ? this.countDaysDiff(el.date) : daysPower);
                         let assessmentDays = returnMePowerDays(el.last_check ? this.countDaysDiff(el.last_check) : daysPower);
                         days = days - assessmentDays;
                         days = days < 1 ? 1 : days;
                         let elScore = el.average_score * days;
-                        //console.log(el.translate+' : '+elScore);
                         self.score += elScore;
                     });
                     this.calculateLevel();
@@ -92,6 +93,15 @@ class TopAdditionals extends HTMLElement {
                     });
                 },
 
+                resetScore(){
+                    this.previousLevelScore = 0;
+                    this.nextLevelScore = null;
+                    this.score = 0;
+                    this.level = 0;
+                    this.lastAbstract = 0;
+                    this.lastAssessment = 0;
+                },
+
                 calcLvlPrcntsStyle(){
                     return ( ( (this.score-this.previousLevelScore)*100 ) / (this.nextLevelScore-this.previousLevelScore) )+'%';
                 },
@@ -109,7 +119,7 @@ class TopAdditionals extends HTMLElement {
                 addHookEvents(){
                     let self = this;
                     window.addEventListener('app-updated', function(e) {
-                        if (!self.loaded && e.detail && e.detail.data) {
+                        if (e.detail && e.detail.data) {
                             self.data = e.detail.data;
                             self.claculateScore();
                         }

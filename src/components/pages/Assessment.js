@@ -182,7 +182,9 @@ $tv.setComponent(
                                 prevDate = el.date;
                             } );
                             this.datesArr = newArr;
-                            this.selectedDate = this.datesArr[0].date;
+                            this.selectedDate = ( this.datesArr && this.datesArr.length ) 
+                                                ? this.datesArr[0].date
+                                                : null;
                             this.updatesCount++;
                         }
                     },
