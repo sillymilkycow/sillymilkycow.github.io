@@ -8,5 +8,6 @@ $tv.import({ define: 'site-menu', file: '/src/components/SiteMenu'});
 $tv.import({ define: 'site-main-page', file: '/src/components/MainPage'});
 $tv.import({ define: 'site-footer', file: '/src/components/Footer'});
 $tv.import({ define: 'site-assessment', file: '/src/components/pages/Assessment'});
+$tv.import({ define: 'site-datacontroll', file: '/src/components/pages/DataControll'});
 $tv.import({ define: 'site-button', file: '/src/components/additionals/Button'});
 $tv.import({ define: 'words-list', file: '/src/components/additionals/WordsList'});

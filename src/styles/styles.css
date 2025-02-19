@@ -16,6 +16,9 @@ button:hover {
     background-color: rgb(102, 163, 224);
     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
+button[disabled] {
+    background-color:#444;
+}
 input {
     padding: 5px 0px;
     font-size: 16px;
@@ -94,6 +97,21 @@ site-menu ul {
     color:#000;
     border-bottom: 4px solid rgb(64, 126, 189);
     background-color:#fff;
+}
+site-datacontroll,
+.progress_table,
+.progress_table td button {
+    width: 100%;
+}
+.progress_table {
+    border-collapse: collapse;
+    border: 1px solid #eee;
+    width: 100%;
+}
+.progress_table td {
+    padding:4px;
+    border: 1px solid #eee;
+    vertical-align: top;
 }
 @media (max-width:767px) {
     .menu-tab .text {
