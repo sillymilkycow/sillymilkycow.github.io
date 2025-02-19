@@ -300,6 +300,7 @@ $tv.setComponent(
                                @keyup.enter="checkInput()"
                                x-bind:placeholder=" !checkObj ? 'Press Enter to start' : 'Enter translation' "
                         />
+                        <button x-on:click="checkInput()">Check / Next</button>
                     </div>
 
                     <template x-if="evaluated && wordsEvaluation.length">

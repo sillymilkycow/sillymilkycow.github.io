@@ -9,8 +9,8 @@ $tv.setComponent(
                     menuArr: [
                         {title:'Abstract', url:'/index.html', icon: '📔'},
                         {title:'Assessment', url:'/pages/page1.html', icon: '📝'},
-                        {title:'About', url:'/pages/about.html', icon: '🪧'},
                         {title:'Progress', url:'/pages/save.html', icon: '💾'},
+                        {title:'About', url:'/pages/about.html', icon: '🪧'},
                     ],
                     init(){
                         let self = this;

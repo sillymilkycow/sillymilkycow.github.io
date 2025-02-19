@@ -94,7 +94,7 @@ $tv.setComponent(
                     <div class="row-between w-full">
                         <h2>Abstract</h2>
                         <template x-if="data.availableTopics.length">
-                            <div class="row-between" style="border:1px solid #000; background-color:#000;">
+                            <div class="row-between">
                                 <select x-model="selectedTopic" @change="callUpdate()">
                                     <template x-for="topic in data.availableTopics">
                                         <option :value="topic.id"
